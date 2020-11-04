@@ -17,7 +17,7 @@ rospy.loginfo('OpenCV version: ' + cv2.__version__+ ' ' + str(cv_info))
 
 # crea oggetto bridge e il publisher per le coordinate
 bridge = CvBridge()
-roi_pub = rospy.Publisher('publisher', RegionOfInterest, queue_size=1)
+roi_pub = rospy.Publisher('roi', RegionOfInterest, queue_size=1)
 
 
 # funzione callback
@@ -44,6 +44,7 @@ def callback(data):
         roi.y_offset = 0
         roi.width = 0
         roi.height = 0
+
         roi_pub.publish(roi)
 
 
