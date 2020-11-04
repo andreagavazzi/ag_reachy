@@ -1,0 +1,4 @@
+<launch> 
+<node pkg="rosserial_arduino" name="serial_node" type="serial_node.py" required="true"/>
+<node pkg="reachy_sense" name="sense" type="sense.py" output="screen" respawn="false"/>
+</launch> 
