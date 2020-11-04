@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(usb_cam)
 
-## Find catkin macros and libraries
+## Find catkin macros and lib
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS image_transport roscpp std_msgs std_srvs sensor_msgs camera_info_manager)
