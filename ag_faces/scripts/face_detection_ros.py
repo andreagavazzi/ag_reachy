@@ -11,10 +11,18 @@ rospy.init_node('openCV')
 rospy.loginfo('Node started.')
 
 # Visualizza informazioni su opencv
-cv_info = [re.sub(' +', ' ', ci.strip()) for ci in cv2.getBuildInformation().strip().split('\n') 
-            if len(ci) > 0 and re.search(r'(nvidia*:?)|(cuda*:)|(cudnn*:)', ci.lower()) is not None]
-rospy.loginfo('OpenCV version: ' + cv2.__version__+ ' ' + str(cv_info))
+#cv_info = [re.sub(' +', ' ', ci.strip()) for ci in cv2.getBuildInformation().strip().split('\n') 
+#            if len(ci) > 0 and re.search(r'(nvidia*:?)|(cuda*:)|(cudnn*:)', ci.lower()) is not None]
 
+cv_info = [re.sub(' +', ' ', ci.strip()) for ci in cv2.getBuildInformation().strip().split('\n') 
+            if len(ci) > 0 and re.search(r'(cuda*:)', ci.lower()) is not None]
+
+rospy.loginfo('OpenCV version: ' + cv2.__version__)
+rospy.loginfo(cv_info[0])
+
+if cv_info[0] != 'Use Cuda: NO':
+    iamodel = 'cnn'
+else: iamodel = ''
 
 # crea oggetto bridge e il publisher per le coordinate
 bridge = CvBridge()
@@ -25,12 +33,13 @@ roi_pub = rospy.Publisher('roi', RegionOfInterest, queue_size=1)
 # funzione callback
 def callback(data):
 
+    global iamodel
     try:
         """ Convert the raw image to OpenCV format """
         cv_image = bridge.imgmsg_to_cv2(data, "bgr8")
         frame = cv_image
 
-        face_locations = face_recognition.face_locations(frame)
+        face_locations = face_recognition.face_locations(frame, model=iamodel)
         #face_locations = face_recognition.face_locations(frame, model='cnn')
 
         for (row1, col1, row2, col2) in face_locations:
