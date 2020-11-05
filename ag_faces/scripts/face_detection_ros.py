@@ -8,13 +8,10 @@ from cv_bridge import CvBridge, CvBridgeError
 import re
 import face_recognition
 
-rospy.init_node('openCV')
+rospy.init_node('ag_faces')
 rospy.loginfo('Node started.')
 
 # Visualizza informazioni su opencv
-#cv_info = [re.sub(' +', ' ', ci.strip()) for ci in cv2.getBuildInformation().strip().split('\n') 
-#            if len(ci) > 0 and re.search(r'(nvidia*:?)|(cuda*:)|(cudnn*:)', ci.lower()) is not None]
-
 cv_info = [re.sub(' +', ' ', ci.strip()) for ci in cv2.getBuildInformation().strip().split('\n') 
             if len(ci) > 0 and re.search(r'(cuda*:)', ci.lower()) is not None]
 
