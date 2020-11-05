@@ -2,7 +2,8 @@
 
 import cv2
 import rospy
-from sensor_msgs.msg import Image, RegionOfInterest
+from sensor_msgs.msg import Image
+from std_msgs.msg import Int8
 from cv_bridge import CvBridge, CvBridgeError
 import re
 import face_recognition
@@ -26,8 +27,7 @@ else: iamodel = ''
 
 # crea oggetto bridge e il publisher per le coordinate
 bridge = CvBridge()
-roi_pub = rospy.Publisher('roi', RegionOfInterest, queue_size=1)
-
+faces_pub = rospy.Publisher('faces', Int8, queue_size=1)
 
 
 # funzione callback
@@ -40,25 +40,17 @@ def callback(data):
         frame = cv_image
 
         face_locations = face_recognition.face_locations(frame, model=iamodel)
-        #face_locations = face_recognition.face_locations(frame, model='cnn')
 
         for (row1, col1, row2, col2) in face_locations:
             cv2.rectangle(frame, (col1, row1), (col2, row2), (0,255,0), 1)
-
 
         # Display the resulting image
         cv2.imshow('Video', frame)
         cv2.waitKey(3)
 
-        roi = RegionOfInterest()
-
-        roi.x_offset = 0
-        roi.y_offset = 0
-        roi.width = 0
-        roi.height = 0
-
-        roi_pub.publish(roi)
-
+        faces = Int8()
+        faces.data = len(face_locations)
+        faces_pub.publish(faces)
 
     except CvBridgeError as e:
         rospy.loginfo(e)
