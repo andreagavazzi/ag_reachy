@@ -33,7 +33,7 @@ def callback(data):
     global iamodel
     try:
         """ Convert the raw image to OpenCV format """
-        cv_image = bridge.imgmsg_to_cv2(data, "bgr8")
+        cv_image = bridge.imgmsg_to_cv2(data, "rgb8")
         frame = cv_image
 
         face_locations = face_recognition.face_locations(frame, model=iamodel)
