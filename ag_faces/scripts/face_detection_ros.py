@@ -46,7 +46,9 @@ def callback(data):
         cv2.waitKey(3)
 
         faces = Int8()
-        faces.data = len(face_locations)
+        found_faces = len(face_locations)
+        
+        faces.data = found_faces
         faces_pub.publish(faces)
 
     except CvBridgeError as e:
