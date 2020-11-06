@@ -20,7 +20,7 @@ rospy.loginfo(cv_info[0])
 
 if cv_info[0] != 'Use Cuda: NO':
     iamodel = 'cnn'
-else: iamodel = ''
+else: iamodel = 'hog'
 
 # crea oggetto bridge e il publisher per le coordinate
 bridge = CvBridge()

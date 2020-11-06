@@ -21,7 +21,7 @@ rospy.loginfo(cv_info[0])
 
 if cv_info[0] != 'Use Cuda: NO':
     iamodel = 'cnn'
-else: iamodel = ''
+else: iamodel = 'hog'
 
 # crea oggetto bridge e il publisher per le coordinate
 bridge = CvBridge()
@@ -71,7 +71,7 @@ def callback(data):
             
             for face_encoding in face_encodings:
                 # See if the face is a match for the known face(s)
-                matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+                matches = face_recognition.compare_faces(known_face_encodings, face_encoding, 0.6)
                 name = "Unknown"
 
                 # # If a match was found in known_face_encodings, just use the first one.
@@ -90,8 +90,7 @@ def callback(data):
 
         process_this_frame = not process_this_frame
 
-
-        
+       
         for (top, right, bottom, left), name in zip(face_locations, face_names):
 
             # Draw a box around the face
@@ -101,7 +100,6 @@ def callback(data):
             #cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 255, 0), cv2.FILLED)
             #font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(frame, name, (left + 6, bottom - 6), cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 255, 0), 1)
-
 
 
         # Display the resulting image
