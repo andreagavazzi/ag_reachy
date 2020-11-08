@@ -90,16 +90,27 @@ def callback(data):
 
         process_this_frame = not process_this_frame
 
-       
+        
+        # Cicle to each located face
         for (top, right, bottom, left), name in zip(face_locations, face_names):
+            
+            color = (0, 0, 255)  # BGR format
+
+            # Debug check
+            print top, right, bottom, left, name
+
+            if name == 'Andrea':
+                color = (0, 255, 0)
+
+                ### TODO Publisher goes here  ###
+
+
 
             # Draw a box around the face
-            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 1)
+            cv2.rectangle(frame, (left, top), (right, bottom), color, 1)
 
-            # Draw a label with a name below the face
-            #cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 255, 0), cv2.FILLED)
-            #font = cv2.FONT_HERSHEY_DUPLEX
-            cv2.putText(frame, name, (left + 6, bottom - 6), cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 255, 0), 1)
+            # Draw the name under the box
+            cv2.putText(frame, name, (left + 6, bottom - 6), cv2.FONT_HERSHEY_DUPLEX, 0.5, color, 1)
 
 
         # Display the resulting image
