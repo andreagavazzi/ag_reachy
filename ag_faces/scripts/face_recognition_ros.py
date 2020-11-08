@@ -2,7 +2,7 @@
 
 import cv2
 import rospy
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, RegionOfInterest
 from std_msgs.msg import Int8
 from cv_bridge import CvBridge, CvBridgeError
 import re
@@ -25,7 +25,7 @@ else: iamodel = 'hog'
 
 # crea oggetto bridge e il publisher per le coordinate
 bridge = CvBridge()
-faces_pub = rospy.Publisher('faces', Int8, queue_size=1)
+faces_pub = rospy.Publisher('roi', RegionOfInterest, queue_size=1)
 
 # Load a sample picture and learn how to recognize it.
 obama_image = face_recognition.load_image_file("/home/andrea/catkin_ws/src/ag_reachy/ag_faces/images/obama.jpg")
@@ -55,6 +55,8 @@ def callback(data):
     global face_names
 
     global iamodel
+
+    roi = RegionOfInterest()
 
     try:
         """ Convert the raw image to OpenCV format """
@@ -97,31 +99,34 @@ def callback(data):
             color = (0, 0, 255)  # BGR format
 
             # Debug check
-            print top, right, bottom, left, name
+            # print top, right, bottom, left, name
 
             if name == 'Andrea':
                 color = (0, 255, 0)
 
                 ### TODO Publisher goes here  ###
+                roi.x_offset = left
+                roi.width = right - left
+                roi.y_offset = top
+                roi.height = bottom - top
 
-
-
-            # Draw a box around the face
+                # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), color, 1)
 
             # Draw the name under the box
             cv2.putText(frame, name, (left + 6, bottom - 6), cv2.FONT_HERSHEY_DUPLEX, 0.5, color, 1)
 
+            # Mid lines
+        cv2.line(frame, (0, 120), (320, 120), (0, 255, 0), 1)
+        cv2.line(frame, (160, 0), (160, 240), (0, 255, 0), 1)
 
         # Display the resulting image
         cv2.imshow('Video', frame)
         cv2.waitKey(3)
 
-        faces = Int8()
-        found_faces = len(face_locations)
-        
-        faces.data = found_faces
-        faces_pub.publish(faces)
+
+
+        faces_pub.publish(roi)
 
     except CvBridgeError as e:
         rospy.loginfo(e)
