@@ -1,3 +1,7 @@
+# HARDWARE
+
+![AGX Xavier](/include/gpio.png)
+
 # SOFTWARE INSTALLATION
 For the OLED display to work the software from Adafruit is required. You can download them from GitHub with the following command.
 
