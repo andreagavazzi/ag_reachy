@@ -56,19 +56,22 @@ def stat():
         draw.rectangle((0,0,width,height), outline=0, fill=0)
 
         # Shell scripts for system monitoring from here : https://unix.stackexchange.com/questions/119126/command-to-display-memory-usage-disk-usage-and-cpu-load
-        cmd = "hostname -I | cut -d\' \' -f1"
-        IP = subprocess.check_output(cmd, shell = True )
-        cmd = "top -bn1 | grep load | awk '{printf \"CPU Load: %.2f\", $(NF-2)}'"
-        CPU = subprocess.check_output(cmd, shell = True )
-        cmd = "free -m | awk 'NR==2{printf \"Mem: %s/%sMB %.2f%%\", $3,$2,$3*100/$2 }'"
-        MemUsage = subprocess.check_output(cmd, shell = True )
-        cmd = "free -m | awk 'NR==3{printf \"Swap: %s/%sMB %.2f%%\", $3,$2,$3*100/$2 }'"
-        SwapUsage = subprocess.check_output(cmd, shell = True )
-        cmd = "df -h | awk '$NF==\"/\"{printf \"Disk: %d/%dGB %s\", $3,$2,$5}'"
-        Disk = subprocess.check_output(cmd, shell = True )
-        cmd = "date"
-        Date = subprocess.check_output(cmd, shell = True )
-        Text = "Reachy by agRobotics"
+        try:
+            cmd = "hostname -I | cut -d\' \' -f1"
+            IP = subprocess.check_output(cmd, shell = True )
+            cmd = "top -bn1 | grep load | awk '{printf \"CPU Load: %.2f\", $(NF-2)}'"
+            CPU = subprocess.check_output(cmd, shell = True )
+            cmd = "free -m | awk 'NR==2{printf \"Mem: %s/%sMB %.2f%%\", $3,$2,$3*100/$2 }'"
+            MemUsage = subprocess.check_output(cmd, shell = True )
+            cmd = "free -m | awk 'NR==3{printf \"Swap: %s/%sMB %.2f%%\", $3,$2,$3*100/$2 }'"
+            SwapUsage = subprocess.check_output(cmd, shell = True )
+            cmd = "df -h | awk '$NF==\"/\"{printf \"Disk: %d/%dGB %s\", $3,$2,$5}'"
+            Disk = subprocess.check_output(cmd, shell = True )
+            cmd = "date"
+            Date = subprocess.check_output(cmd, shell = True )
+            Text = "Reachy by agRobotics"
+        except:
+            pass
 
         # Write lines of text.
         draw.text((x, top),       str(Text.decode('utf-8')),  font=font, fill=255)
