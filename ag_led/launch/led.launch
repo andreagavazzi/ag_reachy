@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="ag_led" name="stats" type="stats.py" output="screen"/>
+</launch>
