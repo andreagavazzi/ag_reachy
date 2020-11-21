@@ -1,4 +1,4 @@
-### SOFTWARE INSTALLATION
+# SOFTWARE INSTALLATION
 For the OLED display to work the software from Adafruit is required. You can download them from GitHub with the following command.
 
 ```
@@ -21,7 +21,7 @@ sudo python setup.py install
 sudo apt-get install libjpeg-dev zlib1g-dev
 ```
 
-### CONFIGURING THE I²C BUS
+# CONFIGURING THE I²C BUS
 After all programs and libraries are installed, the I²C must be configured. The user e.g. nano with whom you log on to your Jetson Nano must still receive group authorisation to access the I² bus. This is exactly what the following command does to adjust the group. For <username> please use your user with which you register.
 
 ```
