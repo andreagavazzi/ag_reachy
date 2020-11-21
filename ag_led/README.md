@@ -1,6 +1,6 @@
 # HARDWARE
 
-![AGX Xavier](/include/gpio.png)
+![AGX Xavier](https://github.com/andreagavazzi/ag_reachy/blob/main/ag_led/include/gpio.png)
 
 # SOFTWARE INSTALLATION
 For the OLED display to work the software from Adafruit is required. You can download them from GitHub with the following command.
