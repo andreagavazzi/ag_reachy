@@ -16,6 +16,7 @@ def stat():
     
     # pub_l1 = rospy.Publisher('lcd_line', String, queue_size=10)
     rospy.init_node('led', anonymous=False)
+    rospy.loginfo('Node Started.')
     rate = rospy.Rate(1)
 
     # 128x32 display with hardware I2C:
@@ -93,4 +94,6 @@ if __name__ == '__main__':
     try:
         stat()
     except rospy.ROSInterruptException:
+        disp.clear()
+        disp.display()
         pass
