@@ -24,7 +24,9 @@ sudo apt-get install libjpeg-dev zlib1g-dev
 ### CONFIGURING THE I²C BUS
 After all programs and libraries are installed, the I²C must be configured. The user e.g. nano with whom you log on to your Jetson Nano must still receive group authorisation to access the I² bus. This is exactly what the following command does to adjust the group. For <username> please use your user with which you register.
 
+```
 sudo usermod -aG i2c <username>
+```
 
 Now please restart the Jetson Nano with the following command. After reboot the user you used can access the I²C bus and see the connected devices like the OLED display
 
