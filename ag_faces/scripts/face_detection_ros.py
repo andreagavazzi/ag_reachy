@@ -45,6 +45,7 @@ def callback(data):
         cv2.imshow('Video', frame)
         cv2.waitKey(3)
 
+        # Publish how many faces are detected
         faces = Int8()
         found_faces = len(face_locations)
         
